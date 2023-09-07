@@ -42,5 +42,13 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/resbyuser/{userId}")
+    public ResponseEntity<ReservationDTO> getByUserId(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(reservationService.getReservationByUserId(userId));
+        } catch (Exception ex) {
+            return ResponseEntity.status(401).body(null);
+        }
+    }
 
 }

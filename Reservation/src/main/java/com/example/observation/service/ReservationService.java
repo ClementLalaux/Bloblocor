@@ -39,10 +39,27 @@ public class ReservationService {
     public MakeReservationDTO getById(Long id){
         if(reservationRepository.findById(id).isPresent()){
             Reservation reservation = reservationRepository.findById(id).get();
-            //MakeReservationDTO makeReservationDTO = new MakeReservationDTO(reservation.getDeparture(), reservation.getArrival(), reservation.getDate(), reservation.getPrice(), reservation.getUserId(), reservation.getEstimationId());
             return mapper.mapToDto(reservation);
         }
         throw new RuntimeException("Not found");
+    }
+
+    public ReservationDTO getReservationByUserId(Long userId){
+        RestClient<UserDTO, String> restClient = new RestClient<>();
+
+        System.out.println("Avant de récupérer les réservations");
+        List<Reservation> reservations = reservationRepository.findAllByUserId(userId);
+        System.out.println("Après de récupérer les réservations");
+
+        System.out.println("Avant de récupérer l'utilisateur");
+        UserDTO userDTO = restClient.get("user/"+userId, UserDTO.class);
+        System.out.println("Après de récupérer l'utilisateur");
+        ReservationDTO reservationDTO = ReservationDTO.builder()
+                .reservations(reservationRepository.findAllByUserId(userId))
+                .userDTO(restClient.get("user/"+userId,UserDTO.class))
+                .build();
+        System.out.println(reservationDTO);
+        return reservationDTO;
     }
 
 

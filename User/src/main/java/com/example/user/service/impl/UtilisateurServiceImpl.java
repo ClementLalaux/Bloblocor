@@ -1,0 +1,77 @@
+package com.example.user.service.impl;
+
+import com.example.user.dto.UtilisateurDTO;
+import com.example.user.entity.Utilisateur;
+import com.example.user.repository.UtilisateurRepository;
+import com.example.user.service.UtilisateurService;
+import com.example.user.utils.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UtilisateurServiceImpl implements UtilisateurService {
+
+    private final UtilisateurRepository utilisateurRepository;
+    @Autowired
+    private Mapper mapper;
+
+    public UtilisateurServiceImpl(UtilisateurRepository userRepository) {
+        this.utilisateurRepository = userRepository;
+    }
+
+
+    @Override
+    public Utilisateur createUser(String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+        Utilisateur user = Utilisateur.builder().firstname(firstname).lastname(lastname).email(email).phone(phone).isDriver(isDriver).isAdmin(isAdmin).build();
+        utilisateurRepository.save(user);
+        return user;
+    }
+
+    @Override
+    public UtilisateurDTO getUserById(Long id) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+        if(utilisateur.isPresent()){
+            UtilisateurDTO utisateurDTO = mapper.mapToDto(utilisateur.get());
+            return utisateurDTO;
+        }
+        throw new RuntimeException("Not found");
+    }
+
+    @Override
+    public List<UtilisateurDTO> getAllUsers() {
+        List<Utilisateur> utilisateurs = (List<Utilisateur>) utilisateurRepository.findAll();
+        List<UtilisateurDTO> utilisateurDTOS =  utilisateurs.stream().map(user->mapper.mapToDto(user)).toList();
+        return utilisateurDTOS;
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+        if(utilisateur.isPresent()){
+            utilisateurRepository.deleteById(id);
+        }
+        throw new RuntimeException("Not found");
+    }
+
+    @Override
+    public UtilisateurDTO updateUserById(Long id, UtilisateurDTO utilisateurDTO) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+        if(utilisateur.isPresent()){
+            Utilisateur utilisateur1 = utilisateur.get();
+            utilisateur1.setFirstname(utilisateurDTO.getFirstname());
+            utilisateur1.setLastname(utilisateurDTO.getLastname());
+            utilisateur1.setEmail(utilisateurDTO.getEmail());
+            utilisateur1.setPhone(utilisateurDTO.getPhone());
+            utilisateur1.setDriver(utilisateurDTO.isDriver());
+            utilisateur1.setAdmin(utilisateurDTO.isAdmin());
+            utilisateurRepository.save(utilisateur1);
+            return mapper.mapToDto(utilisateur1);
+        }
+        throw new RuntimeException("Not found");
+    }
+
+
+}

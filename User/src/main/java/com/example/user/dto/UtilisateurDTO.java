@@ -1,16 +1,16 @@
-package com.example.observation.dto;
+package com.example.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    private Long id;
+@Builder
+@ToString
+public class UtilisateurDTO {
+
+    private String username;
     private String firstname;
     private String lastname;
     private String email;

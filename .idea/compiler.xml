@@ -9,11 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Authentification" />
         <module name="Reservation" />
+        <module name="User" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="User" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
