@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MakeReservationDTO {
-
+    private Long id;
     private String departure;
     private String arrival;
     private String date;

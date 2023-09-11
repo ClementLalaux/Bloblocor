@@ -51,10 +51,11 @@ public class ReservationService {
         return reservationDTO;
     }
 
-    public TakeReservationDTO addClientId(MakeReservationDTO reservationDTO, Long clientId){
+    public TakeReservationDTO addClientId(Long reservationId, Long clientId){
         RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
-        UserDTO userDTO = restClient.get("user"+clientId, UserDTO.class);
-        Reservation reservation = mapper.mapToEntity(reservationDTO);
+        UserDTO userDTO = restClient.get("user/"+clientId, UserDTO.class);
+        MakeReservationDTO makeReservationDTO = getById(reservationId);
+        Reservation reservation = mapper.mapToEntity(makeReservationDTO);
         if(userDTO != null && reservation !=null){
             reservation.setClientId(clientId);
             reservationRepository.save(reservation);
@@ -62,5 +63,36 @@ public class ReservationService {
             return takeReservationDTO;
         }
         throw new RuntimeException("Not found");
+    }
+
+    public TakeReservationDTO updateReservation(Long reservationId, TakeReservationDTO reservation){
+        RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
+        UserDTO userDTO = restClient.get("user/"+reservation.getClientId(), UserDTO.class);
+        UserDTO userDTO1 = restClient.get("user/"+reservation.getDriverId(), UserDTO.class);
+        MakeReservationDTO makeReservationDTO = getById(reservationId);
+        Reservation reservationMapper = mapper.mapToEntity(makeReservationDTO);
+        if(userDTO != null && reservationMapper !=null){
+            reservationMapper.setArrival(reservation.getArrival());
+            reservationMapper.setDeparture(reservation.getDeparture());
+            reservationMapper.setDate(reservation.getDate());
+            reservationMapper.setPrice(reservation.getPrice());
+            reservationMapper.setDriverId(reservation.getDriverId());
+            reservationMapper.setEstimationId(reservation.getEstimationId());
+            reservationMapper.setClientId(reservation.getClientId());
+            reservationRepository.save(reservationMapper);
+            TakeReservationDTO takeReservationDTO = mapper.mapToDtoTake(reservationMapper);
+            return takeReservationDTO;
+        }
+        throw new RuntimeException("Not found");
+    }
+
+    public boolean deleteReservation(Long reservationId){
+        MakeReservationDTO makeReservationDTO = getById(reservationId);
+        Reservation reservation = mapper.mapToEntity(makeReservationDTO);
+        if(reservation != null){
+            reservationRepository.delete(reservation);
+            return true;
+        }
+        throw new RuntimeException("Error");
     }
 }

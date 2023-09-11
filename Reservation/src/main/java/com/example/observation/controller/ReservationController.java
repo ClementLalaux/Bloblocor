@@ -52,10 +52,31 @@ public class ReservationController {
         }
     }
 
-    @PutMapping("/addclient/{clientId}")
-    public ResponseEntity<TakeReservationDTO> addClientToReservation(@PathVariable Long clientId,@RequestBody MakeReservationDTO makeReservationDTO){
+    @PutMapping("/addclient/{clientId}/reservationid/{reservationId}")
+    public ResponseEntity<TakeReservationDTO> addClientToReservation(@PathVariable Long clientId,@PathVariable Long reservationId){
         try {
-            return ResponseEntity.ok(reservationService.addClientId(makeReservationDTO,clientId));
+            return ResponseEntity.ok(reservationService.addClientId(reservationId,clientId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PutMapping("/update/{reservationId}")
+    public ResponseEntity<TakeReservationDTO> addClientToReservation(@PathVariable Long reservationId,@RequestBody TakeReservationDTO reservation1){
+        try {
+            return ResponseEntity.ok(reservationService.updateReservation(reservationId,reservation1));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping("/delete/{reservationId}")
+    public ResponseEntity<String> addClientToReservation(@PathVariable Long reservationId){
+        try {
+            if(reservationService.deleteReservation(reservationId)){
+                return ResponseEntity.ok("Suppression réussie");
+            }
+            return ResponseEntity.status(401).body("Error delete");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
