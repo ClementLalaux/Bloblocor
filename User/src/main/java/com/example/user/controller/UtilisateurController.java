@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("api/user")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class UtilisateurController {
 
@@ -23,9 +23,9 @@ public class UtilisateurController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Utilisateur> post(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String email , @RequestParam String phone , @RequestParam boolean isDriver, @RequestParam boolean isAdmin){
-        Utilisateur utilisateur = utilisateurService.createUser(firstname,lastname,email,phone,isDriver,isAdmin);
-        return ResponseEntity.ok(utilisateur);
+    public ResponseEntity<Utilisateur> createUser(@RequestBody Utilisateur utilisateur){
+        Utilisateur user = utilisateurService.createUser(utilisateur);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("")

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TakeReservationDTO {
-
+    private Long id;
     private String departure;
     private String arrival;
     private String date;

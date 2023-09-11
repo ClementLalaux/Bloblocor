@@ -1,6 +1,5 @@
 package com.example.observation.controller;
 
-import com.example.observation.dto.MakeReservationDTO;
 import com.example.observation.dto.ReservationDTO;
 import com.example.observation.dto.TakeReservationDTO;
 import com.example.observation.entity.Reservation;
@@ -13,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/reservation")
 public class ReservationController {
 
-    private final Mapper mapper;
     private final ReservationService reservationService;
+    private final Mapper mapper;
 
-    public ReservationController(Mapper mapper, ReservationService reservationService) {
-        this.mapper = mapper;
+
+    public ReservationController(ReservationService reservationService, Mapper mapper) {
         this.reservationService = reservationService;
+        this.mapper = mapper;
     }
 
     @GetMapping("")

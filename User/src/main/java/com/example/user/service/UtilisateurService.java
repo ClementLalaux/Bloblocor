@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UtilisateurService {
 
-    Utilisateur createUser(String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin);
+    Utilisateur createUser(Utilisateur utilisateur);
     UtilisateurDTO getUserById(Long id);
     List<UtilisateurDTO> getAllUsers();
     void deleteUserById(Long id);

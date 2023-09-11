@@ -24,10 +24,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
     @Override
-    public Utilisateur createUser(String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
-        Utilisateur user = Utilisateur.builder().firstname(firstname).lastname(lastname).email(email).phone(phone).isDriver(isDriver).isAdmin(isAdmin).build();
-        utilisateurRepository.save(user);
-        return user;
+    public Utilisateur createUser(Utilisateur utilisateur) {
+        utilisateurRepository.save(utilisateur);
+        return utilisateur;
     }
 
     @Override

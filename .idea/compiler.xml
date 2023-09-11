@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Observation" />
         <module name="Authentification" />
         <module name="Reservation" />
         <module name="User" />
@@ -16,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Authentification" options="-parameters" />
+      <module name="Observation" options="-parameters" />
       <module name="Reservation" options="-parameters" />
       <module name="User" options="-parameters" />
     </option>
