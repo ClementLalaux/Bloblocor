@@ -33,10 +33,10 @@ public class ReservationService {
         return (List<Reservation>) reservationRepository.findAll();
     }
 
-    public MakeReservationDTO getById(Long id){
+    public TakeReservationDTO getById(Long id){
         if(reservationRepository.findById(id).isPresent()){
             Reservation reservation = reservationRepository.findById(id).get();
-            return mapper.mapToDto(reservation);
+            return mapper.mapToDtoTake(reservation);
         }
         throw new RuntimeException("Not found");
     }
@@ -54,13 +54,13 @@ public class ReservationService {
     public TakeReservationDTO addClientId(Long reservationId, Long clientId){
         RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
         UserDTO userDTO = restClient.get("user/"+clientId, UserDTO.class);
-        MakeReservationDTO makeReservationDTO = getById(reservationId);
-        Reservation reservation = mapper.mapToEntity(makeReservationDTO);
+        TakeReservationDTO takeReservationDTO = getById(reservationId);
+        Reservation reservation = mapper.mapToEntityTake(takeReservationDTO);
         if(userDTO != null && reservation !=null){
             reservation.setClientId(clientId);
             reservationRepository.save(reservation);
-            TakeReservationDTO takeReservationDTO = mapper.mapToDtoTake(reservation);
-            return takeReservationDTO;
+            TakeReservationDTO bis = mapper.mapToDtoTake(reservation);
+            return bis;
         }
         throw new RuntimeException("Not found");
     }
@@ -69,8 +69,8 @@ public class ReservationService {
         RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
         UserDTO userDTO = restClient.get("user/"+reservation.getClientId(), UserDTO.class);
         UserDTO userDTO1 = restClient.get("user/"+reservation.getDriverId(), UserDTO.class);
-        MakeReservationDTO makeReservationDTO = getById(reservationId);
-        Reservation reservationMapper = mapper.mapToEntity(makeReservationDTO);
+        TakeReservationDTO takeReservationDTO = getById(reservationId);
+        Reservation reservationMapper = mapper.mapToEntityTake(takeReservationDTO);
         if(userDTO != null && reservationMapper !=null){
             reservationMapper.setArrival(reservation.getArrival());
             reservationMapper.setDeparture(reservation.getDeparture());
@@ -80,15 +80,15 @@ public class ReservationService {
             reservationMapper.setEstimationId(reservation.getEstimationId());
             reservationMapper.setClientId(reservation.getClientId());
             reservationRepository.save(reservationMapper);
-            TakeReservationDTO takeReservationDTO = mapper.mapToDtoTake(reservationMapper);
-            return takeReservationDTO;
+            TakeReservationDTO bis = mapper.mapToDtoTake(reservationMapper);
+            return bis;
         }
         throw new RuntimeException("Not found");
     }
 
     public boolean deleteReservation(Long reservationId){
-        MakeReservationDTO makeReservationDTO = getById(reservationId);
-        Reservation reservation = mapper.mapToEntity(makeReservationDTO);
+        TakeReservationDTO takeReservationDTO = getById(reservationId);
+        Reservation reservation = mapper.mapToEntityTake(takeReservationDTO);
         if(reservation != null){
             reservationRepository.delete(reservation);
             return true;

@@ -24,4 +24,10 @@ public class Mapper {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(reservation, TakeReservationDTO.class);
     }
+
+    public Reservation mapToEntityTake(TakeReservationDTO takeReservationDTO) {
+        ModelMapper mapper = new ModelMapper();
+
+        return mapper.map(takeReservationDTO, Reservation.class);
+    }
 }

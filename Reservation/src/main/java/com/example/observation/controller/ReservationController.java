@@ -5,21 +5,19 @@ import com.example.observation.dto.ReservationDTO;
 import com.example.observation.dto.TakeReservationDTO;
 import com.example.observation.entity.Reservation;
 import com.example.observation.service.ReservationService;
-import com.example.observation.tool.RestClient;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import com.example.observation.utils.Mapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("api/reservation")
 public class ReservationController {
 
+    private final Mapper mapper;
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(Mapper mapper, ReservationService reservationService) {
+        this.mapper = mapper;
         this.reservationService = reservationService;
     }
 
@@ -34,10 +32,10 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MakeReservationDTO> getById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<TakeReservationDTO> getById(@PathVariable(value = "id") Long id){
         try {
-            MakeReservationDTO makeReservationDTO = reservationService.getById(id);
-            return ResponseEntity.ok(makeReservationDTO);
+            TakeReservationDTO takeReservationDTO = reservationService.getById(id);
+            return ResponseEntity.ok(takeReservationDTO);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(null);
         }

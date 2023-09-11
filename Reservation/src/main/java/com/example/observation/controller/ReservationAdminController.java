@@ -29,10 +29,10 @@ public class ReservationAdminController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MakeReservationDTO> getById(@PathVariable(value = "id") Long id){
+    public ResponseEntity<TakeReservationDTO> getById(@PathVariable(value = "id") Long id){
         try {
-            MakeReservationDTO makeReservationDTO = reservationService.getById(id);
-            return ResponseEntity.ok(makeReservationDTO);
+            TakeReservationDTO takeReservationDTO = reservationService.getById(id);
+            return ResponseEntity.ok(takeReservationDTO);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(null);
         }
