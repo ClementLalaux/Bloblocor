@@ -15,8 +15,12 @@ import java.util.List;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class UtilisateurController {
 
-    @Autowired
-    private UtilisateurService utilisateurService;
+
+   private UtilisateurService utilisateurService;
+
+    public UtilisateurController(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
 
     @PostMapping("")
     public ResponseEntity<Utilisateur> post(@RequestParam String firstname, @RequestParam String lastname, @RequestParam String email , @RequestParam String phone , @RequestParam boolean isDriver, @RequestParam boolean isAdmin){
@@ -42,8 +46,8 @@ public class UtilisateurController {
 
     @PutMapping("{id}")
     public ResponseEntity<UtilisateurDTO> update(@RequestBody UtilisateurDTO utilisateurDTO, @RequestParam(value = "id") Long id){
-        UtilisateurDTO utisateur = utilisateurService.updateUserById(id,utilisateurDTO);
-        return new ResponseEntity<>(utisateur,HttpStatus.OK);
+        UtilisateurDTO utilisateur = utilisateurService.updateUserById(id,utilisateurDTO);
+        return new ResponseEntity<>(utilisateur,HttpStatus.OK);
     }
 
 }

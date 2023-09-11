@@ -20,7 +20,8 @@ public class Reservation {
     private String arrival;
     private String date;
     private Double price;
-    private Long userId;
+    private Long driverId;
+    private Long clientId;
     private Long estimationId;
 
 }

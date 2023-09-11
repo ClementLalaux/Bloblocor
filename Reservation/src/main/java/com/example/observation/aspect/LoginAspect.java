@@ -12,9 +12,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 @Aspect
 public class LoginAspect {
-    @Before("execution(* com.example.observation.controller.ReservationController.*(..))")
+    @Before("execution(* com.example.observation.controller.ReservationController.*(..)),execution(* com.example.observation.controller.ReservationService.*(..)")
     public void testToken() {
-        RestClient<String, String> restClient = new RestClient<>();
+        RestClient<String, String> restClient = new RestClient<>("http://localhost:8081/api/auth/");
         HttpServletRequest servletRequest = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         String token = servletRequest.getHeader("Authorization");
         if(!restClient.testToken(token, String.class)) {

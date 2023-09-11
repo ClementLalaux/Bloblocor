@@ -2,6 +2,7 @@ package com.example.observation.controller;
 
 import com.example.observation.dto.MakeReservationDTO;
 import com.example.observation.dto.ReservationDTO;
+import com.example.observation.dto.TakeReservationDTO;
 import com.example.observation.entity.Reservation;
 import com.example.observation.service.ReservationService;
 import com.example.observation.tool.RestClient;
@@ -48,6 +49,15 @@ public class ReservationController {
             return ResponseEntity.ok(reservationService.getReservationByUserId(userId));
         } catch (Exception ex) {
             return ResponseEntity.status(401).body(null);
+        }
+    }
+
+    @PutMapping("/addclient/{clientId}")
+    public ResponseEntity<TakeReservationDTO> addClientToReservation(@PathVariable Long clientId,@RequestBody MakeReservationDTO makeReservationDTO){
+        try {
+            return ResponseEntity.ok(reservationService.addClientId(makeReservationDTO,clientId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

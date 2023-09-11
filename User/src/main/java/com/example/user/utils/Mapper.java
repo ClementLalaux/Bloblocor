@@ -1,8 +1,6 @@
 package com.example.user.utils;
 
-import com.example.user.dto.UserDTO;
 import com.example.user.dto.UtilisateurDTO;
-import com.example.user.entity.User;
 import com.example.user.entity.Utilisateur;
 import org.springframework.stereotype.Component;
 import org.modelmapper.ModelMapper;
@@ -23,5 +21,7 @@ public class Mapper {
         Utilisateur utilisateur = mapper.map(utilisateurDTO, Utilisateur.class);
         return utilisateur;
     }
+
+
 
 }

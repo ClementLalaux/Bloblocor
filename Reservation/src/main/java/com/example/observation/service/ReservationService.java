@@ -1,9 +1,6 @@
 package com.example.observation.service;
 
-import com.example.observation.dto.EstimationDTO;
-import com.example.observation.dto.MakeReservationDTO;
-import com.example.observation.dto.ReservationDTO;
-import com.example.observation.dto.UserDTO;
+import com.example.observation.dto.*;
 import com.example.observation.entity.Reservation;
 import com.example.observation.repository.ReservationRepository;
 import com.example.observation.tool.RestClient;
@@ -45,23 +42,25 @@ public class ReservationService {
     }
 
     public ReservationDTO getReservationByUserId(Long userId){
-        RestClient<UserDTO, String> restClient = new RestClient<>();
-
-        System.out.println("Avant de récupérer les réservations");
-        List<Reservation> reservations = reservationRepository.findAllByUserId(userId);
-        System.out.println("Après de récupérer les réservations");
-
-        System.out.println("Avant de récupérer l'utilisateur");
-        UserDTO userDTO = restClient.get("user/"+userId, UserDTO.class);
-        System.out.println("Après de récupérer l'utilisateur");
+        RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
         ReservationDTO reservationDTO = ReservationDTO.builder()
-                .reservations(reservationRepository.findAllByUserId(userId))
+                .reservations(reservationRepository.findAllByDriverIdOrClientId(userId,userId))
                 .userDTO(restClient.get("user/"+userId,UserDTO.class))
                 .build();
         System.out.println(reservationDTO);
         return reservationDTO;
     }
 
-
-
+    public TakeReservationDTO addClientId(MakeReservationDTO reservationDTO, Long clientId){
+        RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
+        UserDTO userDTO = restClient.get("user"+clientId, UserDTO.class);
+        Reservation reservation = mapper.mapToEntity(reservationDTO);
+        if(userDTO != null && reservation !=null){
+            reservation.setClientId(clientId);
+            reservationRepository.save(reservation);
+            TakeReservationDTO takeReservationDTO = mapper.mapToDtoTake(reservation);
+            return takeReservationDTO;
+        }
+        throw new RuntimeException("Not found");
+    }
 }

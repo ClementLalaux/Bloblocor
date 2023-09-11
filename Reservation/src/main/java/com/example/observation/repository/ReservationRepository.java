@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation,Long> {
 
-    List<Reservation> findAllByUserId(Long userId);
+    List<Reservation> findAllByDriverIdOrClientId(Long driverId,Long clientId);
 
 }
