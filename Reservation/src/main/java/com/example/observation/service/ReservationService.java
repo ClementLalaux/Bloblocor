@@ -95,4 +95,15 @@ public class ReservationService {
         }
         throw new RuntimeException("Error");
     }
+
+    public Integer countById(Long reservationId){
+        RestClient<UserDTO, String> restClient = new RestClient<>("http://localhost:8082/api/");
+        UserDTO userDTO = restClient.get("user/"+reservationId, UserDTO.class);
+        Integer count = 0;
+        if(userDTO != null){
+            count = reservationRepository.countByDriverIdOrClientId(reservationId,reservationId);
+            return count;
+        }
+        throw new RuntimeException("Not found");
+    }
 }

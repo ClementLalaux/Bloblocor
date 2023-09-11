@@ -82,4 +82,13 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/count/{reservationId}")
+    public ResponseEntity<Integer> countReservationByUser(@PathVariable Long reservationId){
+        try {
+            return ResponseEntity.ok(reservationService.countById(reservationId));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
