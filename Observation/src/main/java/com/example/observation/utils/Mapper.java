@@ -19,5 +19,5 @@ public class Mapper {
 
         return mapper.map(observationDTO, Observation.class);
     }
-    }
+
 }

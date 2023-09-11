@@ -49,13 +49,10 @@ public class ObservationController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> post(@RequestBody ObservationDTO observationDTO){
+    public ResponseEntity<String> post(@RequestBody Observation observation){
         try {
-            Observation observation = mapper.mapToEntity(observationDTO);
-            if(observationService.createObservation(observation) != null){
-                return ResponseEntity.ok("Observation ajouté");
-            }
-            return ResponseEntity.status(401).body(null);
+            observationService.createObservation(observation);
+            return ResponseEntity.ok("Observation ajouté");
         }catch (Exception e) {
             return ResponseEntity.status(401).body(null);
         }
