@@ -37,5 +37,27 @@ public class ObservationService {
         throw new RuntimeException("Erreur");
     }
 
+    public ObservationDTO updateObservation(String id, ObservationDTO observationDTO){
+        ObservationDTO observationGet = getById(id);
+        if(observationGet != null){
+            observationGet.setComment(observationDTO.getComment());
+            observationGet.setNotation(observationDTO.getNotation());
+            Observation observation = mapper.mapToEntity(observationGet);
+            observationRepository.save(observation);
+            return observationGet;
+        }
+        throw new RuntimeException("Not found");
+    }
+
+    public boolean deleteObservation(String observationId){
+        ObservationDTO observationDTO = getById(observationId);
+        Observation observation = mapper.mapToEntity(observationDTO);
+        if(observation != null){
+            observationRepository.delete(observation);
+            return true;
+        }
+        throw new RuntimeException("Error");
+    }
+
 
 }

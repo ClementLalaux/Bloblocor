@@ -71,7 +71,7 @@ public class ReservationService {
         UserDTO userDTO1 = restClient.get("user/"+reservation.getDriverId(), UserDTO.class);
         TakeReservationDTO takeReservationDTO = getById(reservationId);
         Reservation reservationMapper = mapper.mapToEntityTake(takeReservationDTO);
-        if(userDTO != null && reservationMapper !=null){
+        if(userDTO != null && userDTO1 != null && reservationMapper !=null){
             reservationMapper.setArrival(reservation.getArrival());
             reservationMapper.setDeparture(reservation.getDeparture());
             reservationMapper.setDate(reservation.getDate());

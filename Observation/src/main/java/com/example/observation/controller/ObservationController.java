@@ -58,5 +58,25 @@ public class ObservationController {
         }
     }
 
+    @PutMapping("/update/{observationId}")
+    public ResponseEntity<ObservationDTO> updateObservation(@PathVariable String observationId, @RequestBody ObservationDTO observationDTO){
+        try {
+            return ResponseEntity.ok(observationService.updateObservation(observationId,observationDTO));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping("/delete/{observationId}")
+    public ResponseEntity<String> deleteObservation(@PathVariable String observationId){
+        try {
+            if(observationService.deleteObservation(observationId)){
+                return ResponseEntity.ok("Suppression réussie");
+            }
+            return ResponseEntity.status(401).body("Error delete");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

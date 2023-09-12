@@ -60,7 +60,7 @@ public class ReservationController {
     }
 
     @PutMapping("/update/{reservationId}")
-    public ResponseEntity<TakeReservationDTO> addClientToReservation(@PathVariable Long reservationId,@RequestBody TakeReservationDTO reservation1){
+    public ResponseEntity<TakeReservationDTO> updateReservation(@PathVariable Long reservationId,@RequestBody TakeReservationDTO reservation1){
         try {
             return ResponseEntity.ok(reservationService.updateReservation(reservationId,reservation1));
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/delete/{reservationId}")
-    public ResponseEntity<String> addClientToReservation(@PathVariable Long reservationId){
+    public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId){
         try {
             if(reservationService.deleteReservation(reservationId)){
                 return ResponseEntity.ok("Suppression réussie");
