@@ -1,10 +1,8 @@
 package com.example.user.controller;
 
-import com.example.user.dto.ListUserDTO;
 import com.example.user.dto.UtilisateurDTO;
 import com.example.user.entity.Utilisateur;
 import com.example.user.service.UtilisateurService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +28,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ListUserDTO> getAll(){
+    public ResponseEntity<List<UtilisateurDTO>> getAll(){
         return new ResponseEntity<>(utilisateurService.getAllUsers(),HttpStatus.OK);
     }
 
