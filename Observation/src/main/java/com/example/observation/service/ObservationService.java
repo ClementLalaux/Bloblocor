@@ -7,6 +7,7 @@ import com.example.observation.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,39 +21,41 @@ public class ObservationService {
 
 
     public Observation createObservation(Observation observation){
-        Observation newObservation = observationRepository.save(observation);
-        return newObservation;
+        return observationRepository.save(observation);
     }
 
-    public List<Observation> getAllObservations(){
-        return observationRepository.findAll();
+    public List<ObservationDTO> getAllObservations(){
+        List<ObservationDTO> observationDTOS = new ArrayList<>();
+        List<Observation> observations = observationRepository.findAll();
+        for (Observation o:observations) {
+            ObservationDTO observationDTO = mapper.mapToDto(o);
+            observationDTOS.add(observationDTO);
+        }
+        return observationDTOS;
     }
 
     public ObservationDTO getById(String id){
         if(observationRepository.findById(id).isPresent()){
             Observation observation = observationRepository.findById(id).get();
-            ObservationDTO observationDTO = mapper.mapToDto(observation);
-            return observationDTO;
+            return mapper.mapToDto(observation);
         }
         throw new RuntimeException("Erreur");
     }
 
     public ObservationDTO updateObservation(String id, ObservationDTO observationDTO){
-        ObservationDTO observationGet = getById(id);
-        if(observationGet != null){
+        if(observationRepository.findById(id).isPresent()){
+            Observation observationGet = observationRepository.findById(id).get();
             observationGet.setComment(observationDTO.getComment());
             observationGet.setNotation(observationDTO.getNotation());
-            Observation observation = mapper.mapToEntity(observationGet);
-            observationRepository.save(observation);
-            return observationGet;
+            observationRepository.save(observationGet);
+            return mapper.mapToDto(observationGet);
         }
         throw new RuntimeException("Not found");
     }
 
     public boolean deleteObservation(String observationId){
-        ObservationDTO observationDTO = getById(observationId);
-        Observation observation = mapper.mapToEntity(observationDTO);
-        if(observation != null){
+        if(observationRepository.findById(observationId).isPresent()){
+            Observation observation = observationRepository.findById(observationId).get();
             observationRepository.delete(observation);
             return true;
         }

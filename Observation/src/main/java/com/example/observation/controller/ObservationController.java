@@ -26,13 +26,7 @@ public class ObservationController {
     @GetMapping("")
     public ResponseEntity<List<ObservationDTO>> getAll(){
         try {
-            List<ObservationDTO> observationDTOS = new ArrayList<>();
-            List<Observation> observations = observationService.getAllObservations();
-            for (Observation o: observations) {
-                ObservationDTO observationDTO = mapper.mapToDto(o);
-                observationDTOS.add(observationDTO);
-            }
-            return ResponseEntity.ok(observationDTOS);
+            return ResponseEntity.ok(observationService.getAllObservations());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
