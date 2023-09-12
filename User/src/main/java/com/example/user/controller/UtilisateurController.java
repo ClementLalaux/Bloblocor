@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.user.dto.ListUserDTO;
 import com.example.user.dto.UtilisateurDTO;
 import com.example.user.entity.Utilisateur;
 import com.example.user.service.UtilisateurService;
@@ -29,7 +30,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<UtilisateurDTO>> getAll(){
+    public ResponseEntity<ListUserDTO> getAll(){
         return new ResponseEntity<>(utilisateurService.getAllUsers(),HttpStatus.OK);
     }
 

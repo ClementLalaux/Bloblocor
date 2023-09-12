@@ -1,5 +1,6 @@
 package com.example.user.service.impl;
 
+import com.example.user.dto.ListUserDTO;
 import com.example.user.dto.UtilisateurDTO;
 import com.example.user.entity.Utilisateur;
 import com.example.user.repository.UtilisateurRepository;
@@ -17,6 +18,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     private final UtilisateurRepository utilisateurRepository;
     @Autowired
     private Mapper mapper;
+
+    public void setMapper(Mapper mapper) {
+        this.mapper = mapper;
+    }
 
     public UtilisateurServiceImpl(UtilisateurRepository userRepository) {
         this.utilisateurRepository = userRepository;
@@ -40,10 +45,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public List<UtilisateurDTO> getAllUsers() {
+    public ListUserDTO getAllUsers() {
         List<Utilisateur> utilisateurs = (List<Utilisateur>) utilisateurRepository.findAll();
         List<UtilisateurDTO> utilisateurDTOS =  utilisateurs.stream().map(user->mapper.mapToDto(user)).toList();
-        return utilisateurDTOS;
+        ListUserDTO listUserDTO = new ListUserDTO();
+        listUserDTO.setUtilisateurDTOS(utilisateurDTOS);
+        return listUserDTO;
     }
 
     @Override

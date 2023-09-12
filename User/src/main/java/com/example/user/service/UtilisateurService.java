@@ -1,5 +1,6 @@
 package com.example.user.service;
 
+import com.example.user.dto.ListUserDTO;
 import com.example.user.dto.UtilisateurDTO;
 import com.example.user.entity.Utilisateur;
 
@@ -9,7 +10,7 @@ public interface UtilisateurService {
 
     Utilisateur createUser(Utilisateur utilisateur);
     UtilisateurDTO getUserById(Long id);
-    List<UtilisateurDTO> getAllUsers();
+    ListUserDTO getAllUsers();
     void deleteUserById(Long id);
     UtilisateurDTO updateUserById(Long id, UtilisateurDTO userDTO);
 
