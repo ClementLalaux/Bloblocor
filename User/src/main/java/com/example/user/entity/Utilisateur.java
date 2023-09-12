@@ -29,4 +29,13 @@ public class Utilisateur {
     private boolean isDriver;
     private boolean isAdmin;
 
+    public Utilisateur(String username, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.isDriver = isDriver;
+        this.isAdmin = isAdmin;
+    }
 }
