@@ -12,6 +12,7 @@ public class Observation {
     private String id;
     private Integer notation;
     private String comment;
+
     private Long idClient;
     private Long idReservation;
 

@@ -16,6 +16,7 @@ public class MakeReservationDTO {
     private String departure;
     private String arrival;
     private String date;
+    private boolean isEnded;
     private Double price;
     private Long driverId;
     private Long estimationId;

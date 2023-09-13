@@ -13,6 +13,7 @@ public class ObservationDTO {
 
     private Integer notation;
     private String comment;
+    private boolean isEnded;
     private Long idClient;
     private Long idReservation;
 
