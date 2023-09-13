@@ -1,8 +1,11 @@
 package com.example.observation.service;
 
 import com.example.observation.dto.ObservationDTO;
+import com.example.observation.dto.ReservationDTO;
+import com.example.observation.dto.UserDTO;
 import com.example.observation.entity.Observation;
 import com.example.observation.repository.ObservationRepository;
+import com.example.observation.tool.RestClient;
 import com.example.observation.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,21 @@ public class ObservationService {
 
 
     public Observation createObservation(Observation observation){
-        return observationRepository.save(observation);
+
+        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
+        RestClient<UserDTO, String> restClientDriver = new RestClient<>("http://localhost:8082/api/");
+
+        RestClient<ReservationDTO, String> restClientReservation = new RestClient<>("http://localhost:8083/api/");
+
+        UserDTO userDTO = restClientUser.get("user/"+observation.getIdClient(), UserDTO.class);
+        UserDTO userDTO1 = restClientDriver.get("user/"+observation.getIdDriver(), UserDTO.class);
+        ReservationDTO reservationDTO = restClientReservation.get("reservation/"+observation.getIdReservation(), ReservationDTO.class);
+
+        if(userDTO != null && userDTO1 != null && reservationDTO != null){
+            return observationRepository.save(observation);
+        } else {
+            throw new RuntimeException("Not possible");
+        }
     }
 
     public List<ObservationDTO> getAllObservations(){

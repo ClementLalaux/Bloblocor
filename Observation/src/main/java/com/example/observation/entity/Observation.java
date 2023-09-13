@@ -12,15 +12,16 @@ public class Observation {
     private String id;
     private Integer notation;
     private String comment;
-
+    private Long idDriver;
     private Long idClient;
     private Long idReservation;
 
-    public Observation(String id, Integer notation, String comment, Long idClient, Long idReservation) {
+    public Observation(String id, Integer notation, String comment,Long idDriver, Long idClient, Long idReservation) {
         this.id = id;
         this.notation = notation;
         this.comment = comment;
         this.idClient = idClient;
+        this.idDriver = idDriver;
         this.idReservation = idReservation;
     }
 

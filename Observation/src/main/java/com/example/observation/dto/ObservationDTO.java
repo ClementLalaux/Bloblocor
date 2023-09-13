@@ -15,6 +15,7 @@ public class ObservationDTO {
     private String comment;
     private boolean isEnded;
     private Long idClient;
+    private Long idDriver;
     private Long idReservation;
 
 }
