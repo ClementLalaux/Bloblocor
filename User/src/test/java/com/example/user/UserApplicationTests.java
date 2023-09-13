@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class UserApplicationTests {
@@ -73,27 +74,37 @@ class UserApplicationTests {
 
 	@Test
 	public void shouldReturnListOfUsers(){
-//		Utilisateur utilisateur1 = new Utilisateur(1L, "User1", "FirstName1", "LastName1", "user1@example.com", "1234567890", true, true);
-//		Utilisateur utilisateur2 = new Utilisateur(2L, "User2", "FirstName2", "LastName2", "user2@example.com", "0987654321", true, false);
-//		List<Utilisateur> utilisateurs = Arrays.asList(utilisateur1, utilisateur2);
-//
-//		Mockito.when(utilisateurRepository.findAll()).thenReturn(utilisateurs);
-//
-//		List<UtilisateurDTO> result = utilisateurService.getAllUsers();
-//
-//		Assertions.assertEquals(utilisateurs.size(), result.size());
-//
-//		for (Utilisateur utilisateur : utilisateurs) {
-//			boolean userFound = result.stream().anyMatch(dto -> dto.getId().equals(utilisateur.getId()));
-//			Assertions.assertTrue(userFound);
-//		}
-//
-//		Mockito.verify(utilisateurRepository).findAll();
+		Utilisateur utilisateur1 = new Utilisateur(1L, "User1", "FirstName1", "LastName1", "user1@example.com", "1234567890", true, true);
+		Utilisateur utilisateur2 = new Utilisateur(2L, "User2", "FirstName2", "LastName2", "user2@example.com", "0987654321", true, false);
+		List<Utilisateur> utilisateurs = Arrays.asList(utilisateur1, utilisateur2);
+
+		Mockito.when(utilisateurRepository.findAll()).thenReturn(utilisateurs);
+
+		List<UtilisateurDTO> result = utilisateurService.getAllUsers();
+
+		Assertions.assertEquals(utilisateurs.size(), result.size());
+
+		for (Utilisateur utilisateur : utilisateurs) {
+			boolean userFound = result.stream().anyMatch(dto -> dto.getId().equals(utilisateur.getId()));
+			assertTrue(userFound);
+		}
+
+		Mockito.verify(utilisateurRepository).findAll();
 	}
 
 	@Test
 	public void shouldReturnExceptionWhenDeleteByIdNotFound(){
+		Long idToDelete = 1L;
 
+		Utilisateur utilisateur = new Utilisateur(idToDelete, "Insaiiin", "Clement", "Lalaux", "Lalauxclement@gmail.com", "0761147926", true, true);
+
+		Mockito.when(utilisateurRepository.findById(idToDelete)).thenReturn(Optional.of(utilisateur));
+
+		Mockito.doNothing().when(utilisateurRepository).deleteById(idToDelete);
+
+		utilisateurService.deleteUserById(idToDelete);
+
+		Mockito.verify(utilisateurRepository, Mockito.times(1)).deleteById(idToDelete);
 
 	}
 

@@ -10,7 +10,7 @@ public interface UtilisateurService {
     Utilisateur createUser(Utilisateur utilisateur);
     UtilisateurDTO getUserById(Long id);
     List<UtilisateurDTO> getAllUsers();
-    void deleteUserById(Long id);
+    String deleteUserById(Long id);
     UtilisateurDTO updateUserById(Long id, UtilisateurDTO userDTO);
 
 

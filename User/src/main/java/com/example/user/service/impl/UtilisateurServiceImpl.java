@@ -52,10 +52,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public void deleteUserById(Long id) {
+    public String deleteUserById(Long id) {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
         if(utilisateur.isPresent()){
             utilisateurRepository.deleteById(id);
+            return("User deleted");
         }
         throw new RuntimeException("Not found");
     }
