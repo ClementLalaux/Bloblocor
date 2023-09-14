@@ -43,7 +43,7 @@ public class UtilisateurController {
             Utilisateur utilisateur = utilisateurService.trouverParUsername(loginRequestDTO.getUsername());
             return ResponseEntity.ok(LoginResponseDTO.builder().token(generator.generateToken(authentication))
                     .id(utilisateur.getId())
-                    .avatar(utilisateur.getAvatar())
+
                     .username(utilisateur.getUsername())
                     .email(utilisateur.getEmail())
                     .firstname(utilisateur.getFirstname())
@@ -51,6 +51,7 @@ public class UtilisateurController {
                     .isDriver(utilisateur.isDriver())
                     .lastname(utilisateur.getLastname())
                     .phone(utilisateur.getPhone())
+                    .avatar(utilisateur.getAvatar())
                     .build());
         }catch (Exception ex) {
             throw new RuntimeException();
@@ -60,7 +61,7 @@ public class UtilisateurController {
     @PostMapping("register")
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         try {
-            Utilisateur userApp = utilisateurService.enregistrerUtilisateur(registerRequestDTO.getUsername(), passwordEncoder.encode(registerRequestDTO.getPassword()),registerRequestDTO.getFirstname(),registerRequestDTO.getLastname(),registerRequestDTO.getPhone(), registerRequestDTO.getEmail(), registerRequestDTO.isAdmin(), registerRequestDTO.isDriver());
+            Utilisateur userApp = utilisateurService.enregistrerUtilisateur(registerRequestDTO.getUsername(), passwordEncoder.encode(registerRequestDTO.getPassword()),registerRequestDTO.getFirstname(),registerRequestDTO.getLastname(),registerRequestDTO.getPhone(), registerRequestDTO.getEmail(), registerRequestDTO.isAdmin(), registerRequestDTO.isDriver(),registerRequestDTO.getAvatar());
             return ResponseEntity.ok(RegisterResponseDTO.builder().id(userApp.getId()).message("User created").build());
         }catch (Exception ex) {
             throw new RuntimeException();

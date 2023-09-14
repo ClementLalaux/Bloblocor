@@ -18,7 +18,6 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String avatar;
     private String password;
     private String firstname;
     private String lastname;
@@ -26,6 +25,7 @@ public class Utilisateur {
     private String phone;
     private boolean isDriver;
     private boolean isAdmin;
+    private String avatar;
 
 
     public Utilisateur(String username, String encodePassword) {
@@ -33,8 +33,9 @@ public class Utilisateur {
         this.password = encodePassword;
     }
 
-    public Utilisateur(String username, String password, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+    public Utilisateur(String username, String password, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin,String avatar) {
         this.username = username;
+
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -42,5 +43,6 @@ public class Utilisateur {
         this.phone = phone;
         this.isDriver = isDriver;
         this.isAdmin = isAdmin;
+        this.avatar = avatar;
     }
 }
