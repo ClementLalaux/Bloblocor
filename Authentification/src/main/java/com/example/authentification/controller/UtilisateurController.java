@@ -40,7 +40,17 @@ public class UtilisateurController {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(LoginResponseDTO.builder().token(generator.generateToken(authentication)).build());
+            Utilisateur utilisateur = utilisateurService.trouverParUsername(loginRequestDTO.getUsername());
+            return ResponseEntity.ok(LoginResponseDTO.builder().token(generator.generateToken(authentication))
+                    .id(utilisateur.getId())
+                    .username(utilisateur.getUsername())
+                    .email(utilisateur.getEmail())
+                    .firstname(utilisateur.getFirstname())
+                    .isAdmin(utilisateur.isAdmin())
+                    .isDriver(utilisateur.isDriver())
+                    .lastname(utilisateur.getLastname())
+                    .phone(utilisateur.getPhone())
+                    .build());
         }catch (Exception ex) {
             throw new RuntimeException();
         }
