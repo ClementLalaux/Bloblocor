@@ -26,7 +26,6 @@ public interface ObservationRepository extends MongoRepository<Observation,Strin
     })
     Observation searchByNotationMin(@Param("driverId") Long driverId, @Param("clientId") Long clientId);
 
-    @Aggregation(pipeline = {"{$match: {$or: [ { driverId: driverId }, { clientId: clientId } ]}}", "{ $group: { _id: null, averageNotation: { $avg: '$notation' }}}"})
     Double searchByNotationMoyenne(@Param("driverId") Long driverId, @Param("clientId") Long clientId);
 
     Integer countObservationByIdDriverOrIdClient(Long driverId,Long clientId);
