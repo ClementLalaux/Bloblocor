@@ -13,6 +13,6 @@ public interface UtilisateurService {
     String deleteUserById(Long id);
     UtilisateurDTO updateUserById(Long id, UtilisateurDTO userDTO);
 
-
+    UtilisateurDTO getUserByUsername(String username);
 
 }

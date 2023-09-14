@@ -22,7 +22,7 @@ public class ReservationController {
         this.reservationService = reservationService;
         this.mapper = mapper;
     }
-    
+
     @GetMapping("")
     public ResponseEntity<List<Reservation>> getAll(){
         return ResponseEntity.ok(reservationService.getAllReservations());

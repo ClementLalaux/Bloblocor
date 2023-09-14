@@ -32,6 +32,11 @@ public class UtilisateurController {
         return new ResponseEntity<>(utilisateurService.getAllUsers(),HttpStatus.OK);
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UtilisateurDTO> getByUsername(@PathVariable(value = "username") String username){
+        return new ResponseEntity<>(utilisateurService.getUserByUsername(username),HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<UtilisateurDTO> get(@PathVariable(value = "id") Long id){
         return new ResponseEntity<>(utilisateurService.getUserById(id),HttpStatus.OK);
@@ -44,9 +49,9 @@ public class UtilisateurController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UtilisateurDTO> update(@RequestBody UtilisateurDTO utilisateurDTO, @RequestParam(value = "id") Long id){
+    public ResponseEntity<UtilisateurDTO> update(@RequestBody UtilisateurDTO utilisateurDTO, @PathVariable(value = "id") Long id){
         UtilisateurDTO utilisateur = utilisateurService.updateUserById(id,utilisateurDTO);
-        return new ResponseEntity<>(utilisateur,HttpStatus.OK);
+        return ResponseEntity.ok(utilisateur);
     }
 
 }

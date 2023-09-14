@@ -44,6 +44,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
+    public UtilisateurDTO getUserByUsername(String username) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findUtilisateurByUsername(username);
+        if(utilisateur.isPresent()){
+            UtilisateurDTO utisateurDTO = mapper.mapToDto(utilisateur.get());
+            return utisateurDTO;
+        }
+        throw new RuntimeException("Not found");
+    }
+
+
+
+    @Override
     public List<UtilisateurDTO> getAllUsers() {
         List<Utilisateur> utilisateurs = (List<Utilisateur>) utilisateurRepository.findAll();
         List<UtilisateurDTO> utilisateurDTOS =  utilisateurs.stream().map(user->mapper.mapToDto(user)).toList();
@@ -67,6 +79,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         if(utilisateur.isPresent()){
             Utilisateur utilisateur1 = utilisateur.get();
             utilisateur1.setFirstname(utilisateurDTO.getFirstname());
+            utilisateur1.setUsername(utilisateurDTO.getUsername());
             utilisateur1.setLastname(utilisateurDTO.getLastname());
             utilisateur1.setEmail(utilisateurDTO.getEmail());
             utilisateur1.setPhone(utilisateurDTO.getPhone());
