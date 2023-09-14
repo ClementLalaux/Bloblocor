@@ -43,6 +43,7 @@ public class UtilisateurController {
             Utilisateur utilisateur = utilisateurService.trouverParUsername(loginRequestDTO.getUsername());
             return ResponseEntity.ok(LoginResponseDTO.builder().token(generator.generateToken(authentication))
                     .id(utilisateur.getId())
+                    .avatar(utilisateur.getAvatar())
                     .username(utilisateur.getUsername())
                     .email(utilisateur.getEmail())
                     .firstname(utilisateur.getFirstname())
