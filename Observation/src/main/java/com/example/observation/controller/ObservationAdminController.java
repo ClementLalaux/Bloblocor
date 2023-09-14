@@ -83,32 +83,32 @@ public class ObservationAdminController {
         }
     }
 
-    @GetMapping("/max/{observationId}")
-    public ResponseEntity<ObservationDTO> getMaxObservationByUser(@PathVariable String observationId){
-        try {
-            Long id = parseLong(observationId);
-            return ResponseEntity.ok(observationService.getByMaximumNotation(id));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @GetMapping("/min/{observationId}")
-    public ResponseEntity<ObservationDTO> getMinObservationByUser(@PathVariable Long observationId){
-        try {
-            return ResponseEntity.ok(observationService.getByMinimumNotation(observationId));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @GetMapping("/avg/{observationId}")
-    public ResponseEntity<Double> getAvgObservationByUser(@PathVariable Long observationId){
-        try {
-            return ResponseEntity.ok(observationService.getByMoyenneNotation(observationId));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    @GetMapping("/max/{observationId}")
+//    public ResponseEntity<ObservationDTO> getMaxObservationByUser(@PathVariable String observationId){
+//        try {
+//            Long id = parseLong(observationId);
+//            return ResponseEntity.ok(observationService.getByMaximumNotation(id));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @GetMapping("/min/{observationId}")
+//    public ResponseEntity<ObservationDTO> getMinObservationByUser(@PathVariable Long observationId){
+//        try {
+//            return ResponseEntity.ok(observationService.getByMinimumNotation(observationId));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @GetMapping("/avg/{observationId}")
+//    public ResponseEntity<Double> getAvgObservationByUser(@PathVariable Long observationId){
+//        try {
+//            return ResponseEntity.ok(observationService.getByMoyenneNotation(observationId));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 }

@@ -84,37 +84,38 @@ public class ObservationService {
         throw new RuntimeException("Error");
     }
 
-    public ObservationDTO getByMinimumNotation(Long userId){
-        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
-        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
-        if(userDTO != null){
-            Observation observation = observationRepository.searchByNotationMin(userId,userId);
-            return mapper.mapToDto(observation);
-        }else {
-            throw new RuntimeException("Not possible");
-        }
-    }
-
-    public ObservationDTO getByMaximumNotation(Long userId){
-        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
-        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
-        if(userDTO != null){
-            Observation observation = observationRepository.searchByNotationMax(userId,userId);
-            return mapper.mapToDto(observation);
-        }else {
-            throw new RuntimeException("Not possible");
-        }
-    }
-
-    public Double getByMoyenneNotation(Long userId){
-        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
-        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
-        if(userDTO != null){
-            return observationRepository.searchByNotationMoyenne(userId,userId);
-        }else {
-            throw new RuntimeException("Not possible");
-        }
-    }
+//    public ObservationDTO getByMinimumNotation(Long userId){
+//        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
+//        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
+//        if(userDTO != null){
+//            Observation observation = observationRepository.searchByNotationMin(userId,userId);
+//            return mapper.mapToDto(observation);
+//        }else {
+//            throw new RuntimeException("Not possible");
+//        }
+//    }
+//
+//    public ObservationDTO getByMaximumNotation(Long userId){
+//        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
+//        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
+//        if(userDTO != null){
+//            Observation observation = observationRepository.searchByNotationMax(userId,userId);
+//            return mapper.mapToDto(observation);
+//        }else {
+//            throw new RuntimeException("Not possible");
+//        }
+//    }
+//
+//    public Double getByMoyenneNotation(Long userId){
+//        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
+//        UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
+//        if(userDTO != null){
+//            Double moy = observationRepository.searchByNotationMoyenne(userId,userId);
+//            return moy;
+//        }else {
+//            throw new RuntimeException("Not possible");
+//        }
+//    }
 
     public Integer getCountNotation(Long userId){
         RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
