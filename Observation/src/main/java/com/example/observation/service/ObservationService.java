@@ -24,21 +24,26 @@ public class ObservationService {
 
 
     public Observation createObservation(Observation observation){
+        try{
+            RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
+            RestClient<UserDTO, String> restClientDriver = new RestClient<>("http://localhost:8082/api/");
 
-        RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
-        RestClient<UserDTO, String> restClientDriver = new RestClient<>("http://localhost:8082/api/");
+            RestClient<ReservationDTO, String> restClientReservation = new RestClient<>("http://localhost:8083/api/");
 
-        RestClient<ReservationDTO, String> restClientReservation = new RestClient<>("http://localhost:8083/api/");
+            UserDTO userDTO = restClientUser.get("user/"+observation.getIdClient(), UserDTO.class);
+            UserDTO userDTO1 = restClientDriver.get("user/"+observation.getIdDriver(), UserDTO.class);
+            ReservationDTO reservationDTO = restClientReservation.get("reservationadmin/"+observation.getIdReservation(), ReservationDTO.class);
 
-        UserDTO userDTO = restClientUser.get("user/"+observation.getIdClient(), UserDTO.class);
-        UserDTO userDTO1 = restClientDriver.get("user/"+observation.getIdDriver(), UserDTO.class);
-        ReservationDTO reservationDTO = restClientReservation.get("reservation/"+observation.getIdReservation(), ReservationDTO.class);
-
-        if(userDTO != null && userDTO1 != null && reservationDTO != null){
-            return observationRepository.save(observation);
-        } else {
-            throw new RuntimeException("Not possible");
+            if(userDTO != null && userDTO1 != null && reservationDTO != null){
+                return observationRepository.save(observation);
+            } else {
+                throw new RuntimeException("Not possible");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
+
+
     }
 
     public List<ObservationDTO> getAllObservations(){
@@ -115,7 +120,7 @@ public class ObservationService {
         RestClient<UserDTO, String> restClientUser = new RestClient<>("http://localhost:8082/api/");
         UserDTO userDTO = restClientUser.get("user/"+userId, UserDTO.class);
         if(userDTO != null){
-            return observationRepository.countObservationByDriverIdOrClientId(userId,userId);
+            return observationRepository.countObservationByIdDriverOrIdClient(userId,userId);
         }else {
             throw new RuntimeException("Not possible");
         }

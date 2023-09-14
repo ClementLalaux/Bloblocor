@@ -1,4 +1,4 @@
-package com.example.authentification.dto;
+package com.example.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,14 +9,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestDTO {
+public class UtilisateurResponseDTO {
+    private Long id;
+
     private String username;
-    private String password;
-    private String avatar;
+
     private String firstname;
     private String lastname;
     private String email;
     private String phone;
-    private int isDriver;
-    private int isAdmin;
+    private boolean isDriver;
+    private boolean isAdmin;
+    private String avatar;
 }

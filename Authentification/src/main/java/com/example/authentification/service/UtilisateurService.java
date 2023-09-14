@@ -18,7 +18,7 @@ public class UtilisateurService {
     }
 
 
-    public Utilisateur enregistrerUtilisateur(String username, String password, String firstname, String lastname, String phone, String email, boolean isAdmin,boolean isDriver,String avatar) {
+    public Utilisateur enregistrerUtilisateur(String username, String password, String firstname, String lastname, String phone, String email, int isAdmin,int isDriver,String avatar) {
         Utilisateur user = new Utilisateur(username, password,firstname,lastname,email,phone,isDriver,isAdmin,avatar);
         return userRepository.save(user);
     }

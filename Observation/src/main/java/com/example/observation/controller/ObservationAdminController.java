@@ -7,8 +7,10 @@ import com.example.observation.utils.Mapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Long.parseLong;
+
 @RestController
 @RequestMapping("api/observationadmin")
 public class ObservationAdminController {
@@ -72,7 +74,7 @@ public class ObservationAdminController {
         }
     }
 
-    @GetMapping("/count/{userId}")
+    @GetMapping("/count/{observationId}")
     public ResponseEntity<Integer> countObservationByUser(@PathVariable Long observationId){
         try {
             return ResponseEntity.ok(observationService.getCountNotation(observationId));
@@ -81,16 +83,17 @@ public class ObservationAdminController {
         }
     }
 
-    @GetMapping("/max/{userId}")
-    public ResponseEntity<ObservationDTO> getMaxObservationByUser(@PathVariable Long observationId){
+    @GetMapping("/max/{observationId}")
+    public ResponseEntity<ObservationDTO> getMaxObservationByUser(@PathVariable String observationId){
         try {
-            return ResponseEntity.ok(observationService.getByMaximumNotation(observationId));
+            Long id = parseLong(observationId);
+            return ResponseEntity.ok(observationService.getByMaximumNotation(id));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @GetMapping("/min/{userId}")
+    @GetMapping("/min/{observationId}")
     public ResponseEntity<ObservationDTO> getMinObservationByUser(@PathVariable Long observationId){
         try {
             return ResponseEntity.ok(observationService.getByMinimumNotation(observationId));
@@ -99,7 +102,7 @@ public class ObservationAdminController {
         }
     }
 
-    @GetMapping("/avg/{userId}")
+    @GetMapping("/avg/{observationId}")
     public ResponseEntity<Double> getAvgObservationByUser(@PathVariable Long observationId){
         try {
             return ResponseEntity.ok(observationService.getByMoyenneNotation(observationId));

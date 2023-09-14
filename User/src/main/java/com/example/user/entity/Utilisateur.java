@@ -1,9 +1,6 @@
 package com.example.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,17 +24,19 @@ public class Utilisateur {
     private String email;
     private String avatar;
     private String phone;
+    @Column(name = "isdriver")
     private boolean isDriver;
+    @Column(name = "isadmin")
     private boolean isAdmin;
 
-    public Utilisateur(String username,String avatar, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+    public Utilisateur(String username,String avatar, String firstname, String lastname, String email, String phone, int isDriver, int isAdmin) {
         this.username = username;
         this.avatar = avatar;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
-        this.isDriver = isDriver;
-        this.isAdmin = isAdmin;
+        this.isDriver = isDriver == 1;
+        this.isAdmin = isAdmin  == 1;
     }
 }

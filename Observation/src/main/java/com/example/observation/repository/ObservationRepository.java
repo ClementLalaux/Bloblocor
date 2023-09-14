@@ -1,8 +1,10 @@
 package com.example.observation.repository;
 
 import com.example.observation.entity.Observation;
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.Document;
@@ -10,16 +12,23 @@ import javax.swing.text.Document;
 @Repository
 public interface ObservationRepository extends MongoRepository<Observation,String> {
 
-    @Query(value = "SELECT notation FROM Observation WHERE driverId = driverId OR clientId = clientId ASC LIMIT 1")
+    @Aggregation(pipeline = {
+            "{$match: { $or: [ { driverId: :#{#driverId} }, { clientId: :#{#clientId} } ] }}",
+            "{$sort: { notation: 1 }}",
+            "{$limit: 1}"
+    })
     Observation searchByNotationMax(Long driverId, Long clientId);
 
-    @Query(value = "SELECT notation FROM Observation WHERE driverId = driverId OR clientId = clientId DESC LIMIT 1")
-    Observation searchByNotationMin(Long driverId, Long clientId);
+    @Aggregation(pipeline = {
+            "{$match: { $or: [ { driverId: :#{#driverId} }, { clientId: :#{#clientId} } ] }}",
+            "{$sort: { notation: -1 }}",
+            "{$limit: 1}"
+    })
+    Observation searchByNotationMin(@Param("driverId") Long driverId, @Param("clientId") Long clientId);
 
-    @Query(value = "SELECT AVG(notation) FROM Observation WHERE driverId = driverId OR clientId = clientId")
-    Double searchByNotationMoyenne(Long driverId, Long clientId);
+    @Aggregation(pipeline = {"{$match: {$or: [ { driverId: driverId }, { clientId: clientId } ]}}", "{ $group: { _id: null, averageNotation: { $avg: '$notation' }}}"})
+    Double searchByNotationMoyenne(@Param("driverId") Long driverId, @Param("clientId") Long clientId);
 
-    @Query(value = "SELECT COUNT(*) FROM Observation WHERE driverId = driverId OR clientId = clientId")
-    Integer countObservationByDriverIdOrClientId(Long driverId,Long clientId);
+    Integer countObservationByIdDriverOrIdClient(Long driverId,Long clientId);
 
 }

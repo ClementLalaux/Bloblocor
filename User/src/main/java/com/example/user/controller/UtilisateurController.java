@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.user.dto.UtilisateurDTO;
+import com.example.user.dto.UtilisateurResponseDTO;
 import com.example.user.entity.Utilisateur;
 import com.example.user.service.UtilisateurService;
 import org.springframework.http.HttpStatus;
@@ -49,8 +50,8 @@ public class UtilisateurController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UtilisateurDTO> update(@RequestBody UtilisateurDTO utilisateurDTO, @PathVariable(value = "id") Long id){
-        UtilisateurDTO utilisateur = utilisateurService.updateUserById(id,utilisateurDTO);
+    public ResponseEntity<UtilisateurResponseDTO> update(@RequestBody UtilisateurDTO utilisateurDTO, @PathVariable(value = "id") Long id){
+        UtilisateurResponseDTO utilisateur = utilisateurService.updateUserById(id,utilisateurDTO);
         return ResponseEntity.ok(utilisateur);
     }
 

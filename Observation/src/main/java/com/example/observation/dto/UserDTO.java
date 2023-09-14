@@ -18,5 +18,6 @@ public class UserDTO {
     private String phone;
     private boolean isDriver;
     private boolean isAdmin;
+    private String avatar;
 }
 

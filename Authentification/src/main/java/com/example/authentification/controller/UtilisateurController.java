@@ -61,7 +61,7 @@ public class UtilisateurController {
     @PostMapping("register")
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         try {
-            Utilisateur userApp = utilisateurService.enregistrerUtilisateur(registerRequestDTO.getUsername(), passwordEncoder.encode(registerRequestDTO.getPassword()),registerRequestDTO.getFirstname(),registerRequestDTO.getLastname(),registerRequestDTO.getPhone(), registerRequestDTO.getEmail(), registerRequestDTO.isAdmin(), registerRequestDTO.isDriver(),registerRequestDTO.getAvatar());
+            Utilisateur userApp = utilisateurService.enregistrerUtilisateur(registerRequestDTO.getUsername(), passwordEncoder.encode(registerRequestDTO.getPassword()),registerRequestDTO.getFirstname(),registerRequestDTO.getLastname(),registerRequestDTO.getPhone(), registerRequestDTO.getEmail(), registerRequestDTO.getIsAdmin(), registerRequestDTO.getIsDriver(),registerRequestDTO.getAvatar());
             return ResponseEntity.ok(RegisterResponseDTO.builder().id(userApp.getId()).message("User created").build());
         }catch (Exception ex) {
             throw new RuntimeException();

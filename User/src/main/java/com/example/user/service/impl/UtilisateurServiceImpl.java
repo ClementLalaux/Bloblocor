@@ -1,6 +1,7 @@
 package com.example.user.service.impl;
 
 import com.example.user.dto.UtilisateurDTO;
+import com.example.user.dto.UtilisateurResponseDTO;
 import com.example.user.entity.Utilisateur;
 import com.example.user.repository.UtilisateurRepository;
 import com.example.user.service.UtilisateurService;
@@ -74,7 +75,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public UtilisateurDTO updateUserById(Long id, UtilisateurDTO utilisateurDTO) {
+    public UtilisateurResponseDTO updateUserById(Long id, UtilisateurDTO utilisateurDTO) {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
         if(utilisateur.isPresent()){
             Utilisateur utilisateur1 = utilisateur.get();
@@ -83,10 +84,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             utilisateur1.setLastname(utilisateurDTO.getLastname());
             utilisateur1.setEmail(utilisateurDTO.getEmail());
             utilisateur1.setPhone(utilisateurDTO.getPhone());
-            utilisateur1.setDriver(utilisateurDTO.isDriver());
-            utilisateur1.setAdmin(utilisateurDTO.isAdmin());
+            utilisateur1.setDriver(utilisateurDTO.getIsDriver() == 1);
+            utilisateur1.setAdmin(utilisateurDTO.getIsAdmin() == 1);
             utilisateurRepository.save(utilisateur1);
-            return mapper.mapToDto(utilisateur1);
+            return mapper.mapToDtoResp(utilisateur1);
         }
         throw new RuntimeException("Not found");
     }
