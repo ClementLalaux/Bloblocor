@@ -25,12 +25,14 @@ public class Utilisateur {
     private String firstname;
     private String lastname;
     private String email;
+    private String avatar;
     private String phone;
     private boolean isDriver;
     private boolean isAdmin;
 
-    public Utilisateur(String username, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+    public Utilisateur(String username,String avatar, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
         this.username = username;
+        this.avatar = avatar;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

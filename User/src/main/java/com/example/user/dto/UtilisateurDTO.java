@@ -12,6 +12,7 @@ public class UtilisateurDTO {
     private Long id;
 
     private String username;
+    private String avatar;
     private String firstname;
     private String lastname;
     private String email;
@@ -19,8 +20,9 @@ public class UtilisateurDTO {
     private boolean isDriver;
     private boolean isAdmin;
 
-    public UtilisateurDTO(String username, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
+    public UtilisateurDTO(String username,String avatar, String firstname, String lastname, String email, String phone, boolean isDriver, boolean isAdmin) {
         this.username = username;
+        this.avatar = avatar;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
